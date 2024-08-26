@@ -5,27 +5,26 @@ require_relative "lib/sql_injection_detection/version"
 Gem::Specification.new do |spec|
   spec.name = "sql_injection_detection"
   spec.version = SqlInjectionDetection::VERSION
-  spec.authors = ["TODO: Write your name"]
-  spec.email = ["TODO: Write your email address"]
+  spec.authors = ["Jakub Schwenkbe.de"]
+  spec.email = ["Jakub@Schwenkbeck.com"]
 
-  spec.summary = "TODO: Write a short summary, because RubyGems requires one."
-  spec.description = "TODO: Write a longer description or delete this line."
-  spec.homepage = "TODO: Put your gem's website or public repo URL here."
+  spec.summary = "A simple gem to detect potential SQL injection attacks in input strings."
+  spec.description = "The sql_injection_detection gem provides a basic yet effective way to detect common SQL injection attempts by matching input strings against known malicious patterns. It can be used in Ruby on Rails applications or any Ruby-based projects to help prevent SQL injection vulnerabilities."
+  spec.homepage = "https://github.com/JakubSchwenkbeck/SQL-Injection-Detector-GEM"
   spec.license = "MIT"
   spec.required_ruby_version = ">= 3.0.0"
+  spec.add_development_dependency "rspec"
 
-  spec.metadata["allowed_push_host"] = "TODO: Set to your gem server 'https://example.com'"
+  spec.metadata["allowed_push_host"] = "https://rubygems.org"
 
   spec.metadata["homepage_uri"] = spec.homepage
-  spec.metadata["source_code_uri"] = "TODO: Put your gem's public repo URL here."
-  spec.metadata["changelog_uri"] = "TODO: Put your gem's CHANGELOG.md URL here."
+  spec.metadata["source_code_uri"] = "https://github.com/JakubSchwenkbeck/SQL-Injection-Detector-GEM"
+  # Since you don't have a changelog, this field is omitted
+  # spec.metadata["changelog_uri"] = "https://github.com/JakubSchwenkbeck/SQL-Injection-Detector-GEM/blob/main/CHANGELOG.md"
 
-  # Specify which files should be added to the gem when it is released.
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  gemspec = File.basename(__FILE__)
   spec.files = IO.popen(%w[git ls-files -z], chdir: __dir__, err: IO::NULL) do |ls|
     ls.readlines("\x0", chomp: true).reject do |f|
-      (f == gemspec) ||
+      (f == File.basename(__FILE__)) ||
         f.start_with?(*%w[bin/ test/ spec/ features/ .git appveyor Gemfile])
     end
   end
@@ -36,6 +35,4 @@ Gem::Specification.new do |spec|
   # Uncomment to register a new dependency of your gem
   # spec.add_dependency "example-gem", "~> 1.0"
 
-  # For more information and examples about making a new gem, check out our
-  # guide at: https://bundler.io/guides/creating_gem.html
 end
