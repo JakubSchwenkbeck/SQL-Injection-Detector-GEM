@@ -1,11 +1,12 @@
-# frozen_string_literal: true
-require 'sql_injection_detection'
-RSpec.describe SqlInjectionDetection do
-  it "has a version number" do
-    expect(SqlInjectionDetection::VERSION).not_to be nil
+require 'spec_helper'
+require_relative '../lib/sql_injection_detection'  # Adjust the path if needed
+
+RSpec.describe SqlInjectionDetection::Checker do
+  it "detects a basic SQL injection attempt" do
+    expect(SqlInjectionDetection::Checker.check("' OR 1=1 --")).to be true
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  it "does not flag safe input" do
+    expect(SqlInjectionDetection::Checker.check("safe_input")).to be false
   end
 end
