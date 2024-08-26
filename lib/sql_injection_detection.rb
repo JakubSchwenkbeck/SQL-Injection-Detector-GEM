@@ -2,11 +2,12 @@ module SqlInjectionDetection
   class Checker
     # Common patterns for SQL Injection
     PATTERNS = [
-      /(\%27)|(\')|(\-\-)|(\%23)|(#)/ix, # SQL meta-characters
-      /\b(OR|AND)\b/i,                   # Boolean operators
-      /\b(UNION)\b/i,                    # UNION keyword
-      /\b(SELECT)\b/i                    # SELECT keyword
-    ]
+  /(%27)|(')|(--)|(%23)|(#[^\d]*)/i,  # Updated to handle edge cases and unnecessary escapes
+  /\b(OR|AND)\b/i,
+  /\bUNION\b/i,
+  /\bSELECT\b/i
+]
+
 
     def self.check(input)
       return false if input.nil? || input.strip.empty?
