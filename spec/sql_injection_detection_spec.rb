@@ -91,6 +91,47 @@ RSpec.describe SqlInjectionDetection::Checker do
     expect(SqlInjectionDetection::Checker.check("SELECT LOAD_FILE('/etc/passwd')")).to be true
   end
 
+  # Tests for new patterns
+  it "detects SQL injection using ALTER keyword" do
+    expect(SqlInjectionDetection::Checker.check("ALTER TABLE users ADD COLUMN admin BOOLEAN")).to be true
+  end
+
+  it "detects SQL injection using subqueries" do
+    expect(SqlInjectionDetection::Checker.check("(SELECT * FROM users WHERE username = 'admin')")).to be true
+  end
+
+  it "detects complex UNION SELECT injection" do
+    expect(SqlInjectionDetection::Checker.check("UNION ALL SELECT username, password FROM users")).to be true
+  end
+
+  it "detects SQL injection using INTO OUTFILE" do
+    expect(SqlInjectionDetection::Checker.check("SELECT * FROM users INTO OUTFILE '/tmp/users.txt'")).to be true
+  end
+
+  it "detects SQL injection using ASCII function" do
+    expect(SqlInjectionDetection::Checker.check("SELECT ASCII(SUBSTRING((SELECT password FROM users WHERE username = 'admin'), 1, 1))")).to be true
+  end
+
+  it "detects SQL injection using CONCAT function" do
+    expect(SqlInjectionDetection::Checker.check("SELECT CONCAT(username, ':', password) FROM users")).to be true
+  end
+
+  it "detects SQL injection using CREATE keyword" do
+    expect(SqlInjectionDetection::Checker.check("CREATE TABLE admins (id INT, username VARCHAR(255))")).to be true
+  end
+
+  it "detects SQL injection using RAND function" do
+    expect(SqlInjectionDetection::Checker.check("SELECT * FROM users ORDER BY RAND()")).to be true
+  end
+
+  it "detects SQL injection using SQRT function" do
+    expect(SqlInjectionDetection::Checker.check("SELECT SQRT(25)")).to be true
+  end
+
+  it "detects SQL injection using AES_ENCRYPT function" do
+    expect(SqlInjectionDetection::Checker.check("SELECT AES_ENCRYPT('data', 'key')")).to be true
+  end
+
   # Tests for safe inputs
   it "does not flag safe input" do
     expect(SqlInjectionDetection::Checker.check("safe_input")).to be false
