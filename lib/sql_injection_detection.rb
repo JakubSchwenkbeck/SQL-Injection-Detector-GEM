@@ -75,7 +75,49 @@ module SqlInjectionDetection
 
       # Detects SQL Server injection keywords for accessing system procedures
       # sp_: Stored procedure prefix in SQL Server
-      /\bsp_[a-zA-Z0-9_]+\b/i
+      /\bsp_[a-zA-Z0-9_]+\b/i,
+
+      # Detects SQL injection attempts using the ALTER keyword to change database structure
+      /\bALTER\b/i,
+
+      # Detects usage of subqueries which could be exploited in certain contexts
+      /\b(SELECT\s+\*\s+FROM)\b/i,
+
+      # Detects complex UNION SELECT attempts that combine multiple SELECTs
+      /UNION\s+(ALL\s+)?SELECT\s+/i,
+
+      # Detects SQL keywords that could be used to read from or write to files in the database
+      # OUTFILE: Writes query results to a file in MySQL
+      # INTO OUTFILE: Writes to a file in SQL
+      /\b(INTO\s+OUTFILE|OUTFILE)\b/i,
+
+      # Detects SQL functions that could be used to bypass typical sanitization checks
+      # ASCII: Returns ASCII value of the first character
+      # CHAR: Returns the character for each integer passed
+      /\b(ASCII|CHAR)\b\s*\(\s*[^\)]*\s*\)/i,
+
+      # Detects SQL injection techniques that attempt to execute multiple queries
+      # Semicolon (;) to chain queries together
+      /\;/,
+
+      # Detects SQL injection techniques that make use of the CONCAT function to merge strings
+      /\bCONCAT\b\s*\(/i,
+
+      # Detects SQL keywords related to database schema manipulation that might be dangerous
+      # CREATE: Used to create new tables, databases, or users
+      # ALTER: Used to change database structures
+      /\b(CREATE|ALTER)\b/i,
+
+      # Detects SQL injection techniques that rely on the RAND function to bypass unique constraints
+      /\bRAND\b\s*\(\s*\)/i,
+
+      # Detects SQL injection techniques that use mathematical functions to manipulate results
+      # SQRT: Returns the square root of a number
+      /\bSQRT\b\s*\(\s*\d+\s*\)/i,
+
+      # Detects SQL injection techniques that use encryption functions to manipulate queries
+      # AES_ENCRYPT: Encrypts data using AES
+      /\bAES_ENCRYPT\b\s*\(\s*[^\)]*\s*\)/i
     ]
 
     # Method to check if the input string contains SQL injection patterns
