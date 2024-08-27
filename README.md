@@ -1,7 +1,7 @@
 # SQL Injection Detection Gem
 
 [![Gem Version](https://badge.fury.io/rb/sql_injection_detection.svg)](https://badge.fury.io/rb/sql_injection_detection)
-[![Build Status](https://travis-ci.com/JakubSchwenkbeck/SQL-Injection-Detector-GEM.svg?branch=main)](https://travis-ci.com/JakubSchwenkbeck/SQL-Injection-Detector-GEM)
+
 
 ## Overview
 
