@@ -1,6 +1,8 @@
 # SQL Injection Detection Gem
 
 [![Gem Version](https://badge.fury.io/rb/sql_injection_detection@2x.png)](https://badge.fury.io/rb/sql_injection_detection)
+[![Gem Downloads](https://img.shields.io/gem/dt/sql_injection_detection.svg)](https://rubygems.org/gems/sql_injection_detection)
+
 ## Overview
 
 The `sql_injection_detection` gem is a lightweight Ruby library designed to detect potential SQL injection attempts in input strings. It can be used to enhance the security of Ruby on Rails applications or any Ruby-based projects by identifying and flagging suspicious input patterns that are commonly used in SQL injection attacks.
